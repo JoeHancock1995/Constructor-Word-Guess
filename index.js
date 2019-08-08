@@ -3,7 +3,7 @@ var inquirer = require("inquirer");
 
 var letterArray = "abcdefghijklmnopqrstuvwxyz";
 
-var spaceTerms = [
+var SpaceTerms = [
     "mercury",
     "gemini",
     "apollo",
@@ -45,12 +45,13 @@ var spaceTerms = [
     "hyperion",
 ];
 
-var randomIndex = Math.floor(Math.random() * spaceTerms.length);
-var randomWord = spaceTerms[randomIndex];
+var randomIndex = Math.floor(Math.random() * SpaceTerms.length);
+var randomWord = SpaceTerms[randomIndex];
 
 var computerWord = new Word(randomWord);
 
 var requireNewWord = false;
+
 var incorrectLetters = [];
 var correctLetters = [];
 
@@ -59,11 +60,13 @@ var guessesLeft = 10;
 function theLogic() {
     if (requireNewWord) {
         var randomIndex = Math.floor(Math.random() * spaceTerms.length);
-        var randomWord = spaceTerms[randomIndex];
+        var randomWord = SpaceTerms[randomIndex];
 
         computerWord = new Word(randomWord);
+
         requireNewWord = false;
     }
+
     var wordComplete = [];
     computerWord.objArray.forEach(completeCheck);
 
@@ -73,7 +76,7 @@ function theLogic() {
             {
                 type: "Input",
                 message: "Select letter from A to Z",
-                name: "userInput"
+                name: "userinput"
             }
         ])
         .then(function(input) {
@@ -85,24 +88,26 @@ function theLogic() {
                 theLogic();
         } else {
             if(
-                incorrectLetters.includes(input.userInput) ||
-                correctLetters.includes(input.userInput) ||
-                input.userInput === ""
+                incorrectLetters.includes(input.userinput) ||
+                correctLetters.includes(input.userinput) ||
+                input.userinput === ""
             ) {
                 console.log("\nAlready guessed or entry blank");
                 theLogic();
             } else {
                 var wordCheckArray = [];
-                computerWord.userGuess(input.userInput);
+
+                computerWord.userGuess(input.userinput);
+
                 computerWord.objArray.forEach(wordCheck);
                 if(wordCheckArray.join("") === wordComplete.join("")) {
                     console.log("\nIncorrect\n");
 
-                    incorrectLetters.push(input.userInput);
+                    incorrectLetters.push(input.userinput);
                     guessesLeft --;
                 } else {
                     console.log("\nCorrect\n");
-                    correctLetters.push(input.userInput);
+                    correctLetters.push(input.userinput);
                 }
                 computerWord.log();
                 console.log("Guesses Left: " + guessesLeft + "\n");

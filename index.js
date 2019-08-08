@@ -3,7 +3,7 @@ var inquirer = require("inquirer");
 
 var letterArray = "abcdefghijklmnopqrstuvwxyz";
 
-var SpaceProjects = [
+var spaceTerms = [
     "mercury",
     "gemini",
     "apollo",
@@ -44,3 +44,62 @@ var SpaceProjects = [
     "callisto",
     "hyperion",
 ];
+
+var randomIndex = Math.floor(Math.random() * spaceTerms.length);
+var randomWord = spaceTerms[randomIndex];
+
+var computerWord = new word(randomWord);
+
+var requireNewWord = false;
+var incorrectLetters = [];
+var correctLetters = [];
+
+var guessesLeft = 10;
+
+function theLogic() {
+    if(requireNewWord) {
+        var randomIndex = Math.floor(Math.random() * spaceTerms.length);
+        var randomWord = spaceTerms[randomIndex];
+
+        computerWord = new word(randomWord);
+        requireNewWord = false;
+    }
+    var wordComplete = [];
+    if (wordComplete.includes(false)) {
+        inquirer.prompt([
+            {
+                type: "Input",
+                message: "Select letter from A to Z",
+                name: "userInput"
+            }
+        ]).then(function(input){
+            if(!letterArray.includes(input.userinput) || input.userinput.length > 1) {
+                console.log("\nTry again\n");
+                theLogic();
+            }else {
+                if(incorrectLetters.includes(input.userInput) ||
+                correctLetters.includes(input.userInput) ||
+                input.userInput === "")
+            } {
+                console.log("\nAlready guessed or entry blank");
+                theLogic();
+            } else {
+                var wordCheckArray = [];
+                computerWord.userGuess(input.userInput);
+                computerWord.objArray.forEach(wordCheck);
+                if(wordCheckArray.join("") === wordComplete.join("")){
+                    console.log("\nIncorrect|n");
+                    incorrectLetters.push(input.userInput);
+                    guessesLeft --;
+                }
+                computerWord();
+            }
+        }
+    });
+}else{
+        console.log("YOU WIN! \n");
+    }
+    function completeCheck(key) {
+        wordComplete.push(key.guessed)
+    }
+}

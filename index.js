@@ -91,15 +91,49 @@ function theLogic() {
                     console.log("\nIncorrect|n");
                     incorrectLetters.push(input.userInput);
                     guessesLeft --;
+                } else {
+                    console.log("\nCorrect|n");
+                    correctLetters.push(input.userInput);
                 }
                 computerWord();
+                console.log("Guesses Left: " + guessesLeft + "\n");
+                console.log("Letters Guessed: " incorrectLetters.join(" ") + "\n");
+                if (guessesLeft > 0) {
+                    theLogic();
+                } else {
+                    console.log("You have lost!\n");
+                }
+                function wordCheck(key) {
+                    wordCheckArray.push(key.guessed);
+                }
             }
         }
     });
-}else{
+} else {
         console.log("YOU WIN! \n");
     }
     function completeCheck(key) {
-        wordComplete.push(key.guessed)
+        wordComplete.push(key.guessed);
     }
 }
+function restartGame() {
+    inquirer.prompt([
+        {
+            type: "list",
+            message: "would you like to:",
+            choices: ["Play Again", "Exit"];
+            name: "restart"
+        }
+    ]).then(function(input){
+        if(input.restart === "Play Again") {
+            requireNewWord= true;
+            incorrectLetters = [];
+            correctLetters = [];
+            guessesLeft = 10;
+            theLogic();
+        } else {
+            return;
+        }
+    });
+}
+theLogic();

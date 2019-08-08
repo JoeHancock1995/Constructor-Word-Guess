@@ -1,4 +1,4 @@
-function letter(value) {
+function Letter(value) {
     this.letter = value;
     this.guessed = false;
 

@@ -1,4 +1,4 @@
-var word = require("./word.js");
+var Word = require("./word.js");
 var inquirer = require("inquirer");
 
 var letterArray = "abcdefghijklmnopqrstuvwxyz";
@@ -48,7 +48,7 @@ var spaceTerms = [
 var randomIndex = Math.floor(Math.random() * spaceTerms.length);
 var randomWord = spaceTerms[randomIndex];
 
-var computerWord = new word(randomWord);
+var computerWord = new Word(randomWord);
 
 var requireNewWord = false;
 var incorrectLetters = [];
@@ -57,30 +57,35 @@ var correctLetters = [];
 var guessesLeft = 10;
 
 function theLogic() {
-    if(requireNewWord) {
+    if (requireNewWord) {
         var randomIndex = Math.floor(Math.random() * spaceTerms.length);
         var randomWord = spaceTerms[randomIndex];
 
-        computerWord = new word(randomWord);
+        computerWord = new Word(randomWord);
         requireNewWord = false;
     }
     var wordComplete = [];
+    computerWord.objArray.forEach(completeCheck);
+
     if (wordComplete.includes(false)) {
-        inquirer.prompt([
+        inquirer
+        .prompt([
             {
                 type: "Input",
                 message: "Select letter from A to Z",
                 name: "userInput"
             }
-        ]).then(function(input){
+        ])
+        .then(function(input) {
             if(!letterArray.includes(input.userinput) || input.userinput.length > 1) {
                 console.log("\nTry again\n");
                 theLogic();
-            }else {
-                if(incorrectLetters.includes(input.userInput) ||
+        }else {
+            if(
+                incorrectLetters.includes(input.userInput) ||
                 correctLetters.includes(input.userInput) ||
                 input.userInput === "")
-            } {
+             {
                 console.log("\nAlready guessed or entry blank");
                 theLogic();
             } else {
@@ -97,11 +102,12 @@ function theLogic() {
                 }
                 computerWord();
                 console.log("Guesses Left: " + guessesLeft + "\n");
-                console.log("Letters Guessed: " incorrectLetters.join(" ") + "\n");
+                console.log("Letters Guessed: " + incorrectLetters.join(" ") + "\n");
                 if (guessesLeft > 0) {
                     theLogic();
                 } else {
                     console.log("You have lost!\n");
+                    restartGame();
                 }
                 function wordCheck(key) {
                     wordCheckArray.push(key.guessed);
@@ -121,7 +127,7 @@ function restartGame() {
         {
             type: "list",
             message: "would you like to:",
-            choices: ["Play Again", "Exit"];
+            choices: ["Play Again", "Exit"],
             name: "restart"
         }
     ]).then(function(input){

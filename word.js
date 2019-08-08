@@ -1,5 +1,5 @@
 var Letter = require("./letter.js");
-function word(answer) {
+function Word(answer) {
     this.objArray = [];
 
     for (var i = 0; i < answer.length; i++) {

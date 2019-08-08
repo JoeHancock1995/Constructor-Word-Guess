@@ -8,14 +8,14 @@ function Word(answer) {
     }
 
     this.log = function() {
-        var answerLog = "";
-        for(var i = 0; i < this.objArray.length; i++) {
+         answerLog = "";
+        for (var i = 0; i < this.objArray.length; i++) {
             answerLog += this.objArray[i] + " ";
         }
         console.log(answerLog + "\n=========================\n");
     };
-    this.userGuess = function(input){
-        for(var i = 0; i<this.objArray; i++) {
+    this.userGuess = function(input) {
+        for (var i = 0; i < this.objArray.length; i++) {
             this.objArray[i].guess(input);
         }
     };

@@ -77,30 +77,34 @@ function theLogic() {
             }
         ])
         .then(function(input) {
-            if(!letterArray.includes(input.userinput) || input.userinput.length > 1) {
+            if (
+                !letterArray.includes(input.userinput) ||
+                 input.userinput.length > 1
+                 ) {
                 console.log("\nTry again\n");
                 theLogic();
-        }else {
+        } else {
             if(
                 incorrectLetters.includes(input.userInput) ||
                 correctLetters.includes(input.userInput) ||
-                input.userInput === "")
-             {
+                input.userInput === ""
+            ) {
                 console.log("\nAlready guessed or entry blank");
                 theLogic();
             } else {
                 var wordCheckArray = [];
                 computerWord.userGuess(input.userInput);
                 computerWord.objArray.forEach(wordCheck);
-                if(wordCheckArray.join("") === wordComplete.join("")){
-                    console.log("\nIncorrect|n");
+                if(wordCheckArray.join("") === wordComplete.join("")) {
+                    console.log("\nIncorrect\n");
+
                     incorrectLetters.push(input.userInput);
                     guessesLeft --;
                 } else {
-                    console.log("\nCorrect|n");
+                    console.log("\nCorrect\n");
                     correctLetters.push(input.userInput);
                 }
-                computerWord();
+                computerWord.log();
                 console.log("Guesses Left: " + guessesLeft + "\n");
                 console.log("Letters Guessed: " + incorrectLetters.join(" ") + "\n");
                 if (guessesLeft > 0) {
@@ -117,7 +121,10 @@ function theLogic() {
     });
 } else {
         console.log("YOU WIN! \n");
+
+        restartGame();
     }
+
     function completeCheck(key) {
         wordComplete.push(key.guessed);
     }
@@ -130,8 +137,9 @@ function restartGame() {
             choices: ["Play Again", "Exit"],
             name: "restart"
         }
-    ]).then(function(input){
-        if(input.restart === "Play Again") {
+    ])
+    .then(function(input) {
+        if (input.restart === "Play Again") {
             requireNewWord= true;
             incorrectLetters = [];
             correctLetters = [];
@@ -142,4 +150,5 @@ function restartGame() {
         }
     });
 }
+
 theLogic();

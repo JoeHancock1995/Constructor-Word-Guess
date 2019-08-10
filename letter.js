@@ -15,7 +15,7 @@ function Letter(value) {
         }
     };
 
-    this.guess = function (guess) {
+    this.guess = function(guess) {
         if (guess === this.letter) {
             this.guessed = true;
         }

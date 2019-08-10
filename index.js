@@ -48,25 +48,29 @@ var SpaceTerms = [
 var randomIndex = Math.floor(Math.random() * SpaceTerms.length);
 var randomWord = SpaceTerms[randomIndex];
 
+// Pass random word through Word constructor
 var computerWord = new Word(randomWord);
 
 var requireNewWord = false;
 
+// Array for guessed letters
 var incorrectLetters = [];
 var correctLetters = [];
 
 var guessesLeft = 10;
 
 function theLogic() {
+    // Generates new word for Word constructor if true
     if (requireNewWord) {
         var randomIndex = Math.floor(Math.random() * spaceTerms.length);
-        var randomWord = SpaceTerms[randomIndex];
+        var randomWord = spaceTerms[randomIndex];
 
         computerWord = new Word(randomWord);
 
         requireNewWord = false;
     }
 
+     // TestS if a letter guessed is correct
     var wordComplete = [];
     computerWord.objArray.forEach(completeCheck);
 
@@ -98,7 +102,7 @@ function theLogic() {
                 var wordCheckArray = [];
 
                 computerWord.userGuess(input.userinput);
-
+                // Checks if guess is correct
                 computerWord.objArray.forEach(wordCheck);
                 if(wordCheckArray.join("") === wordComplete.join("")) {
                     console.log("\nIncorrect\n");
@@ -135,7 +139,8 @@ function theLogic() {
     }
 }
 function restartGame() {
-    inquirer.prompt([
+    inquirer
+    .prompt([
         {
             type: "list",
             message: "would you like to:",
